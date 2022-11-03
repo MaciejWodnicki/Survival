@@ -49,22 +49,22 @@ void UPZUGameInstance::Initialize()
 	blockDefinitions["alder_log"].textureTop = "alder_log";
 	blockDefinitions["alder_log"].textureBottom = "alder_log";
 
-	blockDefinitions.Add("iron_plate", SPTerrainMaterial("Wood Planks", 2));
+	blockDefinitions.Add("iron_plate", PZUTerrainMaterial("Wood Planks", 2));
 	blockDefinitions["iron_plate"].SetTextureAll("iron_plate");
 
-	blockDefinitions.Add("hazard_block", SPTerrainMaterial("Wood Planks", 2));
+	blockDefinitions.Add("hazard_block", PZUTerrainMaterial("Wood Planks", 2));
 	blockDefinitions["hazard_block"].SetTextureAll("hazard_block");
 
-	blockDefinitions.Add("concrete", SPTerrainMaterial("Concrete", 2));
+	blockDefinitions.Add("concrete", PZUTerrainMaterial("Concrete", 2));
 	blockDefinitions["concrete"].SetTextureAll("concrete");
 
-	blockDefinitions.Add("concrete_tiled", SPTerrainMaterial("Tield Concrete", 2));
+	blockDefinitions.Add("concrete_tiled", PZUTerrainMaterial("Tield Concrete", 2));
 	blockDefinitions["concrete_tiled"].SetTextureAll("concrete_tiled");
 
-	blockDefinitions.Add("bricks", SPTerrainMaterial("Bricks", 2));
+	blockDefinitions.Add("bricks", PZUTerrainMaterial("Bricks", 2));
 	blockDefinitions["bricks"].SetTextureAll("bricks");
 
-	blockDefinitions.Add("sand", SPTerrainMaterial("Sand", 1));
+	blockDefinitions.Add("sand", PZUTerrainMaterial("Sand", 1));
 	blockDefinitions["sand"].SetTextureAll("sand");
 
 	// ITEMS
