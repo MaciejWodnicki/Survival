@@ -19,11 +19,12 @@ PZUWorld::PZUWorld()
 
 	FPZUMap map;
 
-	map.size = FVector(32, 32, 32);
+	map.size = FVector(64, 64, 32);
 
-	for (int x = 0;x < 32;x++)
-		for (int y = 0;y < 32;y++)
+	for (int x = 0;x < 64;x++)
+		for (int y = 0;y < 64;y++)
 		{
+
 			//map.blocks.Add(FVector(x, y, 0), 0);
 		}
 
