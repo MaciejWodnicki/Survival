@@ -2,7 +2,7 @@
 
 PZUWorld::PZUWorld()
 {
-	/*blockDefinitions.Add(0, "dirt");
+	blockDefinitions.Add(0, "dirt");
 	blockDefinitions.Add(1, "grass");
 	blockDefinitions.Add(2, "stone");
 	blockDefinitions.Add(3, "wood_log");
@@ -15,7 +15,22 @@ PZUWorld::PZUWorld()
 	blockDefinitions.Add(9, "concrete");
 	blockDefinitions.Add(10, "concrete_tiled");
 	blockDefinitions.Add(11, "bricks");
-	blockDefinitions.Add(12, "sand");*/
+	blockDefinitions.Add(12, "sand");
+
+	FPZUMap map;
+
+	map.size = FVector(64, 64, 32);
+
+	for (int x = 0;x < 64;x++)
+		for (int y = 0;y < 64;y++)
+		{
+
+			//map.blocks.Add(FVector(x, y, 0), 0);
+		}
+
+
+	maps.Add(map);
+	SetActiveMap(0);
 
 	/*FSPMap lobby;
 
