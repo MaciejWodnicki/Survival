@@ -8,6 +8,9 @@ APZUTerrain::APZUTerrain()
 	terrainMaterial = Cast<UMaterial>(StaticLoadObject(UMaterial::StaticClass(), nullptr, *materialPath));
 	RootComponent = terrainMesh;
 	resolution = 1;
+
+	SetWorld(new PZUWorld());
+	Refresh();
 }
 void APZUTerrain::BeginPlay()
 {

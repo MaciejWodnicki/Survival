@@ -2,8 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "PZUTerrainMaterial.h"
-//#include "SPItemDefinition.h"
-//#include "SPItem.h"
+#include "PZUItemDefinition.h"
+#include "PZUItem.h"
 //#include "SPItemRecipe.h"
 //#include "SPBuildingDefinition.h"
 //#include "SPWindowLayout.h"
@@ -22,7 +22,7 @@ public:
 	const FString GAME_VERSION = "Pre-alpha 0.0.1";
 
 	TMap<FString, PZUTerrainMaterial> blockDefinitions;
-	//TMap<FString, FSPItemDefinition> itemDefinitions;
+	TMap<FString, FPZUItemDefinition> itemDefinitions;
 	//TArray<FSPItemRecipe> itemRecipes;
 	//TMap<FString, FSPBuildingDefinition> buildingDefinitions;
 	//TMap<FString, FSPWindowLayout> windowLayouts;

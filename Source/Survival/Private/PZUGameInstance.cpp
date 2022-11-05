@@ -68,16 +68,16 @@ void UPZUGameInstance::Initialize()
 	blockDefinitions["sand"].SetTextureAll("sand");
 
 	// ITEMS
-	/*itemDefinitions.Add("undefined", FSPItemDefinition("Undefined", 69, 1));
+	itemDefinitions.Add("undefined", FPZUItemDefinition("Undefined", 69, 1));
 	itemDefinitions["undefined"]
 		.SetDataValue("mesh", "/Game/Items/SM_Item_Undefined")
 		.SetDataValue("HIDDEN");
-	itemDefinitions.Add("REMOVE", FSPItemDefinition("", 0, 1));
+	itemDefinitions.Add("REMOVE", FPZUItemDefinition("", 0, 1));
 	itemDefinitions["REMOVE"]
 		.SetDataValue("mesh", "/Game/Items/SM_Item_Undefined")
 		.SetDataValue("HIDDEN");
 
-	itemDefinitions.Add("archway_lock", FSPItemDefinition("Archway Lock", 1, 0.5));
+	/*itemDefinitions.Add("archway_lock", FSPItemDefinition("Archway Lock", 1, 0.5));
 	itemDefinitions["archway_lock"]
 		.SetDataValue("mesh", "/Game/Items/Archway_Portal/SM_Archway_Lock");
 
