@@ -10,11 +10,12 @@ APZUTerrain::APZUTerrain()
 	resolution = 1;
 
 	SetWorld(new PZUWorld());
-	Refresh();
 }
 void APZUTerrain::BeginPlay()
 {
 	Super::BeginPlay();
+	Refresh();
+
 }
 void APZUTerrain::SetWorld(PZUWorld* w)
 {
