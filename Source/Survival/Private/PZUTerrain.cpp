@@ -7,7 +7,7 @@ APZUTerrain::APZUTerrain()
 	FString materialPath = FString(TEXT("/Game/World/M_Terrain"));
 	terrainMaterial = Cast<UMaterial>(StaticLoadObject(UMaterial::StaticClass(), nullptr, *materialPath));
 	RootComponent = terrainMesh;
-	resolution = 1;
+	resolution = 3;
 
 	SetWorld(new PZUWorld());
 }
