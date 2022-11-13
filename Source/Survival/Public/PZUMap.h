@@ -1,6 +1,6 @@
 #pragma once
 
-//#include "PZUTerrainModifier.h"
+#include "PZUTerrainModifier.h"
 //#include "PZUMapElementItem.h"
 //#include "PZUMapElementBuilding.h"
 #include "CoreMinimal.h"
@@ -22,7 +22,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TMap<FVector, int32> blocks;
 
-	//TArray<SPTerrainModifier*> modifiers;
+	TArray<PZUTerrainModifier*> modifiers;
 
 	/*UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TArray<FSPMapElementItem> items;

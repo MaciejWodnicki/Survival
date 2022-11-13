@@ -7,7 +7,7 @@ APZUTerrain::APZUTerrain()
 	FString materialPath = FString(TEXT("/Game/World/M_Terrain"));
 	terrainMaterial = Cast<UMaterial>(StaticLoadObject(UMaterial::StaticClass(), nullptr, *materialPath));
 	RootComponent = terrainMesh;
-	resolution = 3;
+	resolution = 1;
 
 	SetWorld(new PZUWorld());
 }
@@ -162,8 +162,8 @@ void APZUTerrain::Refresh()
 					}
 				}
 			}
-	/*for (auto& modifier : sourceMap->modifiers)
-		modifier->Apply(vertices);*/
+	for (auto& modifier : sourceMap->modifiers)
+		modifier->Apply(vertices);
 
 	terrainMesh->CreateMeshSection_LinearColor(0, vertices, triangles, normals, UV0, vertexColors, tangents, true);
 	terrainMesh->ContainsPhysicsTriMeshData(true);

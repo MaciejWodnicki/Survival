@@ -43,7 +43,7 @@ PZUWorld::PZUWorld()
 	int sizex = 128;
 	int sizey = 128;
 	int sizez = 64;
-	
+
 	map.size = FVector(sizex, sizey, sizez);
 
 	for (int x = 0;x < sizex;x++)
@@ -55,18 +55,18 @@ PZUWorld::PZUWorld()
 				map.blocks.Add(FVector(x, y, 0), 12);
 			}
 
-			
-				/*for (int z = 0; z < 32; z++)
-					if (x == y)
-					{
-						for (int i = 0; i < z; i++)
-						{
-							map.blocks.Add(FVector(x - z - 64, y + z, i), 2);
-							map.blocks.Add(FVector(x - z - 65, y + z, i), 2);
-							map.blocks.Add(FVector(x - z - 66, y + z, i), 2);
 
-						}
-					}*/
+			/*for (int z = 0; z < 32; z++)
+				if (x == y)
+				{
+					for (int i = 0; i < z; i++)
+					{
+						map.blocks.Add(FVector(x - z - 64, y + z, i), 2);
+						map.blocks.Add(FVector(x - z - 65, y + z, i), 2);
+						map.blocks.Add(FVector(x - z - 66, y + z, i), 2);
+
+					}
+				}*/
 
 				/*for (int z = 0; z < 32; z++)
 					if (sizex - x == y)
@@ -82,7 +82,7 @@ PZUWorld::PZUWorld()
 			for (int z = 0; z < 32; z++)
 			{
 				if (sizey - y == 100 - z)
-				{	
+				{
 					for (int i = 0; i < z; i++)
 					{
 						map.blocks.Add(FVector(x, y + 70, i), 2);
@@ -92,12 +92,19 @@ PZUWorld::PZUWorld()
 			}
 
 
+			// Perlin Noise 2D Surface
 
-			
+			int terrainHeight = FMath::Rand() % 8;
+
+			for (int i = 1;i < terrainHeight + 1;i++)
+			{
+
+				map.blocks.Add(FVector(x, y, i), *map.blocks.Find(FVector(x, y, 0)));
+			}
 		}
-	
-	
-	for(int x = 0; x < sizex + 1; x++)
+
+
+	for (int x = 0; x < sizex + 1; x++)
 		for (int z = 0; z < sizez + 1; z++)
 		{
 			map.blocks.Remove(FVector(x, -1, z));
