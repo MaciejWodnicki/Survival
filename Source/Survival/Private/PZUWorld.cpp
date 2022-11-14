@@ -22,7 +22,7 @@ void AddTree(FVector location, FPZUMap& map) // dodawanie drzewa
 	map.blocks.Add(location + FVector(0, 0, 6), 4);
 }
 
-PZUWorld::PZUWorld() 
+PZUWorld::PZUWorld()
 {
 	// ladowanie definicji blokow
 	blockDefinitions.Add(0, "dirt");
@@ -50,37 +50,45 @@ PZUWorld::PZUWorld()
 	for (int x = 0;x < sizex;x++)
 		for (int y = 0;y < sizey;y++)
 		{
-			map.blocks.Add(FVector(x, y, 0), 1);
+			map.blocks.Add(FVector(x, y, 0), 0);
 			if (x < 128 && y < 24)
 			{
 				map.blocks.Add(FVector(x, y, 0), 12);
 			}
 
-
-			for (int z = 0; z < 32; z++)
-			{
-				if (sizey - y == 100 - z)
+			// tworzenie roznorodnego terenu 
+			int terrainHeight = 1;
+			if (FMath::Floor(FMath::Rand() % 10) == 0)
+				terrainHeight -= (FMath::Rand() % 3) - 1;
+			if (!(x < 128 && y < 24))
+				for (int i = 0;i < terrainHeight + 1;i++)
 				{
-					for (int i = 0; i < z; i++)
+
+					map.blocks.Add(FVector(x, y, i), 0);
+					if (i == terrainHeight)
 					{
-						map.blocks.Add(FVector(x, y + 70, i), 2);
+						map.blocks.Add(FVector(x, y, i), 1);
+
+						// szansa na postawienie drzewa w tym miejscu
+						if (FMath::Floor(FMath::Rand() % 50) == 0)
+							AddTree(FVector(x, y, i), map);
 					}
 				}
 
-			}
 
-
-			// Perlin Noise 2D Surface
-			// tworzenie roznorodnego terenu 
-			int terrainHeight = FMath::Rand() % 2; 
-			if (!(x < 128 && y < 24))
-			for (int i = 1;i < terrainHeight + 1;i++)
+			// genereowanie gory
+			if (y > 25 && y < 57)
 			{
+				float i = y - 25;
+				int mountainHeight = FMath::Floor(FMath::Sin((i / 32) * PI) * 16);
 
-				map.blocks.Add(FVector(x, y, i), *map.blocks.Find(FVector(x, y, 0)));
+				if (FMath::Floor(FMath::Rand() % 10) == 0)
+					mountainHeight -= 1;
+
+				for (int j = 0;j <= mountainHeight;j++)
+					map.blocks.Add(FVector(x, y + 70, j), 2);
 			}
 
-		
 		}
 
 
@@ -109,7 +117,7 @@ PZUWorld::~PZUWorld()
 {
 }
 
-void PZUWorld::AddMap(FPZUMap& map) 
+void PZUWorld::AddMap(FPZUMap& map)
 {
 	maps.Add(map);
 }
