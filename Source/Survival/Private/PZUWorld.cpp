@@ -41,8 +41,8 @@ PZUWorld::PZUWorld()
 	blockDefinitions.Add(12, "sand");
 
 	FPZUMap map;
-	int sizex = 128;
-	int sizey = 128;
+	int sizex = 256;
+	int sizey = 356;
 	int sizez = 64;
 
 	map.size = FVector(sizex, sizey, sizez); // wielkosc mapy
@@ -50,46 +50,104 @@ PZUWorld::PZUWorld()
 	for (int x = 0;x < sizex;x++)
 		for (int y = 0;y < sizey;y++)
 		{
+			// tworzenie roznorodnego terenu 
+			int terrainHeight = 1;
+			int terrainHeight2 = 2;
+			int terrainHeight3 = 3;
+			int terrainHeight4 = 4;
+			
+			if (FMath::Floor(FMath::Rand() % 5) == 0)
+				terrainHeight -= (FMath::Rand() % 4) - 1;
+			if (!(x < 64 && y < 72))
+				for (int i = 0;i < terrainHeight + 1;i++)
+				{
+
+					map.blocks.Add(FVector(x, y, i), 1);
+				
+				}
+
+			if (FMath::Floor(FMath::Rand() % 10) == 0)
+				terrainHeight2 -= (FMath::Rand() % 4) - 1;
+			if(!(x < 100 && y < 105))
+				for (int i = 0; i < terrainHeight2 + 1; i++)
+				{
+
+					map.blocks.Add(FVector(x, y, i), 1);
+			
+				}
+
+			if (FMath::Floor(FMath::Rand() % 10) == 0)
+				terrainHeight3 -= (FMath::Rand() % 4) - 1;
+			if (!(x < 120 && y < 150))
+				for (int i = 0; i < terrainHeight3 + 1; i++)
+				{
+
+					map.blocks.Add(FVector(x, y, i), 1);
+					
+				
+				}
+
+			if (FMath::Floor(FMath::Rand() % 10) == 0)
+				terrainHeight4 -= (FMath::Rand() % 4) - 1;
+			if (!(x < 170 && y < 200))
+				for (int i = 0; i < terrainHeight4 + 1; i++)
+				{
+
+					map.blocks.Add(FVector(x, y, i), 1);
+					
+		
+				}
+
+		}
+
+	for (int x = 0; x < sizex; x++)
+		for (int y = 0; y < sizey; y++)
+		{ 
+			// generowanie plazy
 			map.blocks.Add(FVector(x, y, 0), 0);
-			if (x < 128 && y < 24)
+			if (x < 64 && y < 72)
 			{
 				map.blocks.Add(FVector(x, y, 0), 12);
 			}
 
-			// tworzenie roznorodnego terenu 
-			int terrainHeight = 1;
-			if (FMath::Floor(FMath::Rand() % 10) == 0)
-				terrainHeight -= (FMath::Rand() % 3) - 1;
-			if (!(x < 128 && y < 24))
-				for (int i = 0;i < terrainHeight + 1;i++)
-				{
-
-					map.blocks.Add(FVector(x, y, i), 0);
-					if (i == terrainHeight)
-					{
-						map.blocks.Add(FVector(x, y, i), 1);
-
-						// szansa na postawienie drzewa w tym miejscu
-						if (FMath::Floor(FMath::Rand() % 50) == 0)
-							AddTree(FVector(x, y, i), map);
-					}
-				}
-
-
-			// genereowanie gory
-			if (y > 25 && y < 57)
+			//generowanie drzew
+			for (int i = 10; i >= 0; i--)
 			{
-				float i = y - 25;
-				int mountainHeight = FMath::Floor(FMath::Sin((i / 32) * PI) * 16);
+				if (map.blocks.Contains(FVector(x, y, i)) && map.blocks[FVector(x, y, i)] == 1)
+				{
+					if (FMath::Floor(FMath::Rand() % 150) == 0)
+					AddTree(FVector(x, y, i + 1), map);
+						break;
+				}
+			}
+			// genereowanie gory
+			if (y > 290 && y < 356)
+			{
+				float i = y - 290;
+				int mountainHeight = FMath::Floor(FMath::Sin((i / 64) * PI) * 24); // wysokosc gory
 
 				if (FMath::Floor(FMath::Rand() % 10) == 0)
 					mountainHeight -= 1;
 
-				for (int j = 0;j <= mountainHeight;j++)
-					map.blocks.Add(FVector(x, y + 70, j), 2);
+				for (int j = 0; j <= mountainHeight; j++)
+					map.blocks.Add(FVector(x, y + 40, j), 2);
 			}
+			if (x > 190 && x < 256)
+			{
+				float i = x - 190;
+				int mountainWidth = FMath::Floor(FMath::Sin((i / 64) * PI) * 24); // wysokosc gory
 
+				if (FMath::Floor(FMath::Rand() % 10) == 0)
+					mountainWidth -= 1;
+
+				for (int j = 0; j <= mountainWidth; j++)
+					map.blocks.Add(FVector(x + 40, y, j), 2);
+			}
 		}
+
+
+
+			
 
 
 	for (int x = 0; x < sizex + 1; x++)
@@ -106,8 +164,6 @@ PZUWorld::PZUWorld()
 			map.blocks.Remove(FVector(sizex, y, z));
 		}
 
-
-	AddTree(FVector(5, 8, 1), map);
 
 	maps.Add(map);
 	SetActiveMap(0);
