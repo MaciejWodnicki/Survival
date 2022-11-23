@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 #include "PZUCharacter.generated.h"
 
+// struktura potrzeby gracza
 struct Need
 {
 private:
@@ -70,27 +71,24 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	Need vigor;
+	Need health;
 	Need food;
-	Need stamina;
-	Need bliss;
 
 public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	float vigorChange;
+	float healthChange;
 	float foodChange;
-	float staminaChange;
 
 	UFUNCTION(BlueprintCallable)
-		float GetVigor();
+		float GetHealth();
 	UFUNCTION(BlueprintCallable)
-		float GetVigorMax();
+		float GetHealthMax();
 	UFUNCTION(BlueprintCallable)
-		float GetVigorPercentage();
+		float GetHealthPercentage();
 	UFUNCTION(BlueprintCallable)
-		void AddVigor(float toAdd);
+		void AddHealth(float toAdd);
 
 	UFUNCTION(BlueprintCallable)
 		float GetFood();
@@ -100,22 +98,4 @@ public:
 		float GetFoodPercentage();
 	UFUNCTION(BlueprintCallable)
 		void AddFood(float toAdd);
-
-	UFUNCTION(BlueprintCallable)
-		float GetStamina();
-	UFUNCTION(BlueprintCallable)
-		float GetStaminaMax();
-	UFUNCTION(BlueprintCallable)
-		float GetStaminaPercentage();
-	UFUNCTION(BlueprintCallable)
-		void AddStamina(float toAdd);
-
-	UFUNCTION(BlueprintCallable)
-		float GetBliss();
-	UFUNCTION(BlueprintCallable)
-		float GetBlissMax();
-	UFUNCTION(BlueprintCallable)
-		float GetBlissPercentage();
-	UFUNCTION(BlueprintCallable)
-		void AddBliss(float toAdd);
 };

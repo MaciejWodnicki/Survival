@@ -23,9 +23,4 @@ public:
 		TMap<FVector, int32> blocks;
 
 	TArray<PZUTerrainModifier*> modifiers;
-
-	/*UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		TArray<FSPMapElementItem> items;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		TArray<FSPMapElementBuilding> buildings;*/
 };
