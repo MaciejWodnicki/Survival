@@ -28,4 +28,4 @@ public:
 	virtual void BeginPlay() override;
 	void SetWorld(PZUWorld* w);
 	void Refresh();
-}
+};
