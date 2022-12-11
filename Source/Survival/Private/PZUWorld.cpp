@@ -5,13 +5,13 @@ void AddTree(FVector location, FPZUMap& map) // dodawanie drzewa
 	for (int x = -2;x < 3;x++)
 		for (int y = -2;y < 3;y++)
 		{
-			map.blocks.Add(location + FVector(x, y, 3), 4);
-			map.blocks.Add(location + FVector(x, y, 4), 4);
+			map.blocks.Add(location + FVector(x, y, 7), 4);
+			map.blocks.Add(location + FVector(x, y, 8), 4);
 		}
 	for (int x = -1;x < 2;x++)
 		for (int y = -1;y < 2;y++)
 		{
-			map.blocks.Add(location + FVector(x, y, 5), 4);
+			map.blocks.Add(location + FVector(x, y, 9), 4);
 		}
 
 	map.blocks.Add(location, 3);
@@ -19,21 +19,25 @@ void AddTree(FVector location, FPZUMap& map) // dodawanie drzewa
 	map.blocks.Add(location + FVector(0, 0, 2), 3);
 	map.blocks.Add(location + FVector(0, 0, 3), 3);
 	map.blocks.Add(location + FVector(0, 0, 4), 3);
-	map.blocks.Add(location + FVector(0, 0, 6), 4);
+	map.blocks.Add(location + FVector(0, 0, 5), 3);
+	map.blocks.Add(location + FVector(0, 0, 6), 3);
+	map.blocks.Add(location + FVector(0, 0, 7), 4);
+	map.blocks.Add(location + FVector(0, 0, 8), 4);
+	map.blocks.Add(location + FVector(0, 0, 9), 4);
 }
 
 void IslandElevation(int width, int height, int pos_x, int pos_y, FPZUMap& map)
 {
 	for (int x = 0; x < 255; x++)
-		for (int y = 0; y < 355; y++)
-			if (x >= 0 && x <= 255 && y >= 0 && y <= 355)
-				if ((float)FMath::Pow(x - 128, 2) / FMath::Pow(64, 2) + (float)FMath::Pow(y - 178, 2) / FMath::Pow(96, 2) < 1)
+		for (int y = 0; y < 365; y++)
+				if ((float)FMath::Pow(x - 128 - pos_x, 2) / FMath::Pow(width, 2) + (float)FMath::Pow(y - 178 - pos_y, 2) / FMath::Pow(height, 2) < 1)
 				{
-					for (int i = 62; i >= 2; i--)
+					for (int i = 63; i >= 1; i--)
 					{
 						if (map.blocks.Contains(FVector(x, y, i - 1)))
 						{
 							map.blocks.Add(FVector(x, y, i), map.blocks[FVector(x, y, i - 1)]);
+							map.blocks.Add(FVector(x, y, 0), 2);
 						}
 						else
 						{
@@ -42,6 +46,15 @@ void IslandElevation(int width, int height, int pos_x, int pos_y, FPZUMap& map)
 					}
 				}
 }
+
+void MountainElevation(int width, int height, int pos_x, int pos_y, int max_size, int min_size, int step, int offset_x, int offset_y, FPZUMap& map) 
+{ 
+	for (int i = max_size; i > min_size; i -= step) 
+	{ 
+		IslandElevation(i - offset_x,  i - offset_y, pos_x, pos_y, map); 
+	} 
+}
+
 
 PZUWorld::PZUWorld()
 {
@@ -132,6 +145,34 @@ PZUWorld::PZUWorld()
 				map.blocks.Add(FVector(x, y, 0), 12);
 			}
 
+		}
+
+	MountainElevation(40, 40, 100, 100, 128, 32, 2, 5, 5, map);
+	MountainElevation(5, 5, -50, -40, 64, 32, 4, 5, 5, map);
+	MountainElevation(5, 5, -100, -70, 64, 32, 3, 5, 5, map);
+	MountainElevation(5, 5, -100, 150, 64, 32, 4, 5, 5, map);
+	MountainElevation(5, 5, 50, -75, 64, 32, 4, 5, 5, map);
+	MountainElevation(5, 5, 70, -100, 64, 32, 4, 5, 5, map);
+	MountainElevation(5, 5, -40, -100, 64, 32, 4, 5, 5, map);
+
+	for (int x = 0; x < 255; x++)
+		for (int y = 0; y < 365; y++)
+			if ((float)FMath::Pow(x - 128 - 100, 2) / FMath::Pow(128, 2) + (float)FMath::Pow(y - 178 - 100, 2) / FMath::Pow(128, 2) < 1)
+			{
+				for (int i = 63; i >= 1; i--)
+				{
+					if (map.blocks.Contains(FVector(x, y, i)))
+					{
+						map.blocks.Add(FVector(x, y, i), 2);
+					
+					}
+		
+				}
+			}
+
+	for (int x = 0; x < sizex; x++)
+		for (int y = 0; y < sizey; y++)
+		{
 			//generowanie drzew
 			for (int i = 10; i >= 0; i--)
 			{
@@ -142,29 +183,7 @@ PZUWorld::PZUWorld()
 					break;
 				}
 			}
-
 		}
-
-
-
-	for (int x = 0; x < 255; x++)
-		for (int y = 0; y < 355; y++)
-			if (x >= 0 && x <= 255 && y >= 0 && y <= 355)
-				if ((float)FMath::Pow(x - 128, 2) / FMath::Pow(64, 2) + (float)FMath::Pow(y - 178, 2) / FMath::Pow(96, 2) < 1)
-				{
-					for (int i = 62; i >= 2; i--)
-					{
-						if (map.blocks.Contains(FVector(x, y, i - 1)))
-						{
-							map.blocks.Add(FVector(x, y, i), map.blocks[FVector(x, y, i - 1)]);
-						}
-						else
-						{
-							map.blocks.Remove(FVector(x, y, i));
-						}
-					}
-				}
-
 
 	for (int x = 0; x < sizex + 1; x++) // obcinanie granicy mapy
 		for (int z = 0; z < sizez + 1; z++)
@@ -181,27 +200,13 @@ PZUWorld::PZUWorld()
 		}
 
 
-	/*for (int i = 128; i > 32; i -= 8)
-	{
-		IslandElevation(i, i + 48, 0, 0, map);
-	}
-
-	for (int i = 128; i > 32; i -= 8)
-	{
-		IslandElevation(i, i + 48, 10, 50, map);
-	}*/
-
-
-
-
-
-
-
 
 	maps.Add(map);
 	SetActiveMap(0);
 
 }
+
+
 PZUWorld::~PZUWorld()
 {
 }
