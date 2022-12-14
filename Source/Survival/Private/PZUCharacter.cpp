@@ -3,7 +3,9 @@
 APZUCharacter::APZUCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	// nadanie maksymalnej wartosci najedzenia
 	food.SetFullnessMax(200);
+	// nadanie procentowego wypelnienia najedzenia
 	food.SetFullnessPercentage(0.9);
 }
 
@@ -20,6 +22,7 @@ void APZUCharacter::Tick(float DeltaTime)
 	healthChange = 0;
 	foodChange = -0.1;
 
+	// mechanika regeneracji zdrowia
 	if (health.GetFullnessPercentage() < 1)
 	{
 		healthChange += 0.01;
@@ -41,6 +44,7 @@ void APZUCharacter::Tick(float DeltaTime)
 		}
 	}
 
+	// nadanie aktualnej wartosci zdrowia i najedzenia
 	health.AddFullness(DeltaTime * healthChange);
 	food.AddFullness(DeltaTime * foodChange);
 }
@@ -50,6 +54,7 @@ void APZUCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+// metody odpowiedzialne za zdrowie...
 float APZUCharacter::GetHealth()
 {
 	return health.GetFullness();
@@ -67,6 +72,7 @@ void APZUCharacter::AddHealth(float toAdd)
 	health.AddFullness(toAdd);
 }
 
+// ...i najedzenie
 float APZUCharacter::GetFood()
 {
 	return food.GetFullness();

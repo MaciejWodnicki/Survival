@@ -26,6 +26,7 @@ void AddTree(FVector location, FPZUMap& map) // dodawanie drzewa
 	map.blocks.Add(location + FVector(0, 0, 9), 4);
 }
 
+// wyniesieni obszaru w obrebie elipsy
 void IslandElevation(int width, int height, int pos_x, int pos_y, FPZUMap& map)
 {
 	for (int x = 0; x < 255; x++)
@@ -47,6 +48,7 @@ void IslandElevation(int width, int height, int pos_x, int pos_y, FPZUMap& map)
 				}
 }
 
+// metoda generujaca gory
 void MountainElevation(int width, int height, int pos_x, int pos_y, int max_size, int min_size, int step, int offset_x, int offset_y, FPZUMap& map) 
 { 
 	for (int i = max_size; i > min_size; i -= step) 
@@ -74,6 +76,7 @@ PZUWorld::PZUWorld()
 	blockDefinitions.Add(11, "bricks");
 	blockDefinitions.Add(12, "sand");
 
+	// instancja i rozmiar mapy
 	FPZUMap map;
 	int sizex = 256;
 	int sizey = 356;
@@ -147,6 +150,7 @@ PZUWorld::PZUWorld()
 
 		}
 
+	// generowanie gor
 	MountainElevation(40, 40, 100, 100, 128, 32, 2, 5, 5, map);
 	MountainElevation(5, 5, -50, -40, 64, 32, 4, 5, 5, map);
 	MountainElevation(5, 5, -100, -70, 64, 32, 3, 5, 5, map);
@@ -155,6 +159,7 @@ PZUWorld::PZUWorld()
 	MountainElevation(5, 5, 70, -100, 64, 32, 4, 5, 5, map);
 	MountainElevation(5, 5, -40, -100, 64, 32, 4, 5, 5, map);
 
+	// w obrebie gory teren jest skamienialy
 	for (int x = 0; x < 255; x++)
 		for (int y = 0; y < 365; y++)
 			if ((float)FMath::Pow(x - 128 - 100, 2) / FMath::Pow(128, 2) + (float)FMath::Pow(y - 178 - 100, 2) / FMath::Pow(128, 2) < 1)
