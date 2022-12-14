@@ -18,6 +18,8 @@ private:
 	UMaterial* terrainMaterial;
 
 	UPZUGameInstance* gameInstance;
+	
+
 
 	PZUWorld* sourceWorld;
 
