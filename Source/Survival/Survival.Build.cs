@@ -13,6 +13,10 @@ public class Survival : ModuleRules
         //AI dependencies
         PublicDependencyModuleNames.AddRange(new string[] { "AIModule", "NavigationSystem", "GameplayTasks" });
 
+        //terrain dependencies
+        PublicDependencyModuleNames.AddRange(new string[] {"RawMesh", "AssetTools", "AssetRegistry" });
+
+
 
         // Uncomment if you are using Slate UI
         // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
