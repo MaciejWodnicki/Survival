@@ -1,4 +1,6 @@
 #include "PZUTerrain.h"
+#include "AssetRegistry/AssetRegistryModule.h" 
+#include <RawMesh/Public/RawMesh.h>
 
 APZUTerrain::APZUTerrain()
 {
@@ -178,4 +180,5 @@ void APZUTerrain::Refresh()
 	terrainMesh->CreateMeshSection_LinearColor(0, vertices, triangles, normals, UV0, vertexColors, tangents, true);
 	terrainMesh->ContainsPhysicsTriMeshData(true);
 	terrainMesh->SetMaterial(0, terrainMaterial);
+
 }

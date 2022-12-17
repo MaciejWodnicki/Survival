@@ -18,6 +18,8 @@ private:
 	UMaterial* terrainMaterial;
 
 	UPZUGameInstance* gameInstance;
+	
+
 
 	PZUWorld* sourceWorld;
 
@@ -28,4 +30,5 @@ public:
 	virtual void BeginPlay() override;
 	void SetWorld(PZUWorld* w);
 	void Refresh();
+
 };
