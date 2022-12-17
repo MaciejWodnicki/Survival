@@ -3,16 +3,10 @@
 APZUCharacter::APZUCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	// nadanie maksymalnej wartosci najedzenia
 	food.SetFullnessMax(200);
+	// nadanie procentowego wypelnienia najedzenia
 	food.SetFullnessPercentage(0.9);
-	stamina.SetFullnessMax(50);
-	stamina.SetFullnessPercentage(1);
-	bliss.SetFullnessMax(400);
-	bliss.SetFullness(0);
-
-
-	stamina.SetFullnessPercentage(0.1);
-	bliss.SetFullnessPercentage(0.6);
 }
 
 void APZUCharacter::BeginPlay()
@@ -24,54 +18,35 @@ void APZUCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	vigorChange = 0;
+	// potrzeby gracza: zdrowie i najedzenie
+	healthChange = 0;
 	foodChange = -0.1;
-	staminaChange = 0;
 
-	if (vigor.GetFullnessPercentage() < 1)
+	// mechanika regeneracji zdrowia
+	if (health.GetFullnessPercentage() < 1)
 	{
-		vigorChange += 0.01;
+		healthChange += 0.01;
 		foodChange += -0.01;
-		if (vigor.GetFullnessPercentage() < 0.75)
+		if (health.GetFullnessPercentage() < 0.75)
 		{
-			vigorChange += 0.015;
+			healthChange += 0.015;
 			foodChange += -0.015;
-			if (vigor.GetFullnessPercentage() < 0.5)
+			if (health.GetFullnessPercentage() < 0.5)
 			{
-				vigorChange += 0.025;
+				healthChange += 0.025;
 				foodChange += -0.025;
-				if (vigor.GetFullnessPercentage() < 0.25)
+				if (health.GetFullnessPercentage() < 0.25)
 				{
-					vigorChange += 0.05;
+					healthChange += 0.05;
 					foodChange += -0.05;
 				}
 			}
 		}
 	}
 
-	if (stamina.GetFullnessPercentage() < 1)
-	{
-		staminaChange += 0.01;
-		foodChange += -0.01;
-		if (stamina.GetFullnessPercentage() < 0.75)
-		{
-			staminaChange += 0.015;
-			foodChange += -0.015;
-			if (stamina.GetFullnessPercentage() < 0.5)
-			{
-				staminaChange += 0.025;
-				foodChange += -0.025;
-				if (stamina.GetFullnessPercentage() < 0.25)
-				{
-					staminaChange += 0.05;
-					foodChange += -0.05;
-				}
-			}
-		}
-	}
-	vigor.AddFullness(DeltaTime * vigorChange);
+	// nadanie aktualnej wartosci zdrowia i najedzenia
+	health.AddFullness(DeltaTime * healthChange);
 	food.AddFullness(DeltaTime * foodChange);
-	stamina.AddFullness(DeltaTime * staminaChange);
 }
 
 void APZUCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -79,23 +54,25 @@ void APZUCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-float APZUCharacter::GetVigor()
+// metody odpowiedzialne za zdrowie...
+float APZUCharacter::GetHealth()
 {
-	return vigor.GetFullness();
+	return health.GetFullness();
 }
-float APZUCharacter::GetVigorMax()
+float APZUCharacter::GetHealthMax()
 {
-	return vigor.GetFullnessMax();
+	return health.GetFullnessMax();
 }
-float APZUCharacter::GetVigorPercentage()
+float APZUCharacter::GetHealthPercentage()
 {
-	return vigor.GetFullnessPercentage();
+	return health.GetFullnessPercentage();
 }
-void APZUCharacter::AddVigor(float toAdd)
+void APZUCharacter::AddHealth(float toAdd)
 {
-	vigor.AddFullness(toAdd);
+	health.AddFullness(toAdd);
 }
 
+// ...i najedzenie
 float APZUCharacter::GetFood()
 {
 	return food.GetFullness();
@@ -111,38 +88,4 @@ float APZUCharacter::GetFoodPercentage()
 void APZUCharacter::AddFood(float toAdd)
 {
 	food.AddFullness(toAdd);
-}
-
-float APZUCharacter::GetStamina()
-{
-	return stamina.GetFullness();
-}
-float APZUCharacter::GetStaminaMax()
-{
-	return stamina.GetFullnessMax();
-}
-float APZUCharacter::GetStaminaPercentage()
-{
-	return stamina.GetFullnessPercentage();
-}
-void APZUCharacter::AddStamina(float toAdd)
-{
-	stamina.AddFullness(toAdd);
-}
-
-float APZUCharacter::GetBliss()
-{
-	return bliss.GetFullness();
-}
-float APZUCharacter::GetBlissMax()
-{
-	return bliss.GetFullnessMax();
-}
-float APZUCharacter::GetBlissPercentage()
-{
-	return bliss.GetFullnessPercentage();
-}
-void APZUCharacter::AddBliss(float toAdd)
-{
-	bliss.AddFullness(toAdd);
 }

@@ -4,11 +4,16 @@
 
 APZUTerrain::APZUTerrain()
 {
+	// wskaznik na instancje gry - obiekt, ktory istnieje do konca dzialania gry
 	gameInstance = Cast<UPZUGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	// wskaznik do proceduralnie generowanej siatki
 	terrainMesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("TerrainMesh"));
+	// sciezka do materialu terenu
 	FString materialPath = FString(TEXT("/Game/World/M_Terrain"));
+	// material terenu
 	terrainMaterial = Cast<UMaterial>(StaticLoadObject(UMaterial::StaticClass(), nullptr, *materialPath));
 	RootComponent = terrainMesh;
+	// ilosc kwadratow na scianie bloku terenu
 	resolution = 1;
 
 	SetWorld(new PZUWorld());
@@ -25,11 +30,15 @@ void APZUTerrain::SetWorld(PZUWorld* w)
 }
 void APZUTerrain::Refresh()
 {
+	// wskaznik do aktualnej mapy
 	FPZUMap* sourceMap = sourceWorld->currentMap;
+	// lista wierzcholkow sciany
 	TArray<FVector> planeVertices;
+	// lista trojkatow sciany
 	TArray<int32> planeTriangles;
 	double planeStep = static_cast<double>(100) / (double)resolution;
 
+	// konstrukcja sciany bloku
 	for (int x = 0; x <= resolution; x++)
 		for (int y = 0; y <= resolution; y++)
 		{
@@ -46,6 +55,7 @@ void APZUTerrain::Refresh()
 			}
 		}
 
+	// atrybuty siatki terenu
 	TArray<FVector> vertices;
 	TArray<int32> triangles;
 	TArray<FVector> normals;
@@ -170,76 +180,5 @@ void APZUTerrain::Refresh()
 	terrainMesh->CreateMeshSection_LinearColor(0, vertices, triangles, normals, UV0, vertexColors, tangents, true);
 	terrainMesh->ContainsPhysicsTriMeshData(true);
 	terrainMesh->SetMaterial(0, terrainMaterial);
-	terrainMesh->AddCollisionConvexMesh(vertices);
+
 }
-void APZUTerrain::MainMenuWorld()
-{
-	PZUWorld* mainMenuWorld = new PZUWorld();
-	FPZUMap* map = new FPZUMap();
-	map->size = FVector(24, 18, 8);
-
-	for (int i = 0; i < 24; i++)
-		for (int j = 0; j < 18; j++)
-		{
-			map->blocks.Add(FVector(i, j, 0), 1);
-		}
-	for (int i = 0; i < 24; i++)
-		for (int j = 1; j < 4; j++)
-		{
-			map->blocks.Add(FVector(23, i, j), 9);
-		}
-
-	int wipX = 18;
-	int wipZ = 1;
-	int wipMaterialIndex = 8;
-	for (int i = 2; i < 16; i++)
-		for (int j = 1; j < 9; j++)
-		{
-			map->blocks.Add(FVector(wipX + 1, i, j), 11);
-		}
-	// Text "WIP"
-	map->blocks.Add(FVector(wipX, 3, wipZ + 5), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 3, wipZ + 4), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 3, wipZ + 3), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 3, wipZ + 2), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 4, wipZ + 1), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 5, wipZ + 2), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 5, wipZ + 3), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 6, wipZ + 1), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 7, wipZ + 2), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 7, wipZ + 3), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 7, wipZ + 4), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 7, wipZ + 5), wipMaterialIndex);
-
-	map->blocks.Add(FVector(wipX, 9, wipZ + 1), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 9, wipZ + 2), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 9, wipZ + 3), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 9, wipZ + 5), wipMaterialIndex);
-
-	map->blocks.Add(FVector(wipX, 11, wipZ + 1), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 11, wipZ + 2), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 11, wipZ + 3), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 11, wipZ + 4), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 11, wipZ + 5), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 12, wipZ + 3), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 12, wipZ + 5), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 13, wipZ + 3), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 13, wipZ + 5), wipMaterialIndex);
-	map->blocks.Add(FVector(wipX, 14, wipZ + 4), wipMaterialIndex);
-
-	//pile of cubes
-	map->blocks.Add(FVector(16, 2, 1), 0);
-	map->blocks.Add(FVector(15, 1, 1), 2);
-	map->blocks.Add(FVector(14, 0, 1), 3);
-	map->blocks.Add(FVector(15, 0, 2), 4);
-	map->blocks.Add(FVector(16, 1, 2), 5);
-	map->blocks.Add(FVector(16, 0, 3), 7);
-
-	mainMenuWorld->AddMap(*map);
-	mainMenuWorld->SetActiveMap(1);
-
-	SetWorld(mainMenuWorld);
-	Refresh();
-}
-
-

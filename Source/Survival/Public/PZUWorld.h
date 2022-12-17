@@ -14,9 +14,6 @@ public:
 	PZUWorld();
 	~PZUWorld();
 
-	//static PZUWorld& MainMenuWorld();
-	//static PZUWorld& TutorialWorld();
-
 	void AddMap(FPZUMap& map);
 	void SetActiveMap(int index);
 

@@ -31,8 +31,4 @@ public:
 	void SetWorld(PZUWorld* w);
 	void Refresh();
 
-	UFUNCTION(BlueprintCallable)
-		void MainMenuWorld();
-
-
 };
