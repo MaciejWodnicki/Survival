@@ -34,9 +34,5 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void MainMenuWorld();
 
-	UFUNCTION(BlueprintCallable)
-	UStaticMesh* ConvertProceduralMeshToStaticMesh(UProceduralMeshComponent* proceduralMesh);
-	UFUNCTION(BlueprintCallable)
-	UProceduralMeshComponent* getProceduralTerrainMesh();
 
 };
