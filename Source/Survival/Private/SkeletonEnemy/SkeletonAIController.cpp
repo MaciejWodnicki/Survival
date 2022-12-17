@@ -1,6 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "SkeletonEnemy/SkeletonAIController.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
@@ -10,7 +7,6 @@ ASkeletonAIController::ASkeletonAIController()
 {
 	BehaviorTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("Behavior Tree Component"));
 	BlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("Blackboard Component"));
-
 }
 
 TObjectPtr<UBehaviorTreeComponent> ASkeletonAIController::GetBehaviorTreeComponent() const

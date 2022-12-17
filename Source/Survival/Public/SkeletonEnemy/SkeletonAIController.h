@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -11,9 +9,8 @@
 class UAISenseConfig_Sight;
 class UBehaviorTreeComponent;
 class UBlackboardComponent;
-/**
- * 
- */
+
+
 UCLASS()
 class SURVIVAL_API ASkeletonAIController : public AAIController
 {

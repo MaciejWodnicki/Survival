@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,7 +5,7 @@
 #include "BTT_FindRandomLocation.generated.h"
 
 /**
- * BTTask for finding a random location on a NavMesh
+ * Task znajduje lokacje w danym promieniu 
  */
 UCLASS()
 class SURVIVAL_API UBTTask_Skelly_FindRandomLocation : public UBTTask_BlackboardBase
